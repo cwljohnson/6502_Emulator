@@ -161,9 +161,12 @@ namespace ASM_Emulator
                 }
             }
 
+            int currentAddr = ProgramStart;
+
             for (int i = 0; i < instructions.Count; i++)
             {
-                Console.WriteLine(instructions[i]);
+                Console.WriteLine("{0:X4}: {1}", currentAddr, instructions[i]);
+                currentAddr += instructions[i].Length;
             }
 
             return instructions;

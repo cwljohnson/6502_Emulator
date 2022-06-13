@@ -19,6 +19,8 @@ namespace ASM_Emulator
     }
     internal enum OpCodes : byte
     {
+        [OpCode("CLC", false)]
+        CLC = 0x18,
         [OpCode("JSR", true)]
         JSR = 0x20,
         [OpCode("JMP", true)]
@@ -66,7 +68,11 @@ namespace ASM_Emulator
         [OpCode("NOP", false)]
         NOP = 0xEA,
         [OpCode("CPX", true)]
-        CPX_ABS = 0xEC
+        CPX_ABS = 0xEC,
+        [OpCode("PRINT", true)]
+        PRINT_ADDR = 0xFE,
+        [OpCode("PRINT", false)]
+        PRINT_MEM = 0xFF
     }
 
     internal static class OpCodeHelper

@@ -15,7 +15,7 @@
             emulator.Execute();
 
             Console.WriteLine("Output Memory:");
-            emulator.PrintRAM(0x0000);
+            emulator.PrintRAM(0x0000, 8);
 
             Console.WriteLine("Output Instructions:");
             emulator.PrintInstructions();

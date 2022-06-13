@@ -24,7 +24,7 @@ namespace ASM_Emulator
                 Sr.Carry = false;
             }
 
-            Value = (byte)(Value + value);
+            Value = (byte)(result);
         }
     }
 }

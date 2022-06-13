@@ -65,7 +65,12 @@ namespace ASM_Emulator
             while (ram[ProgramCounter] != 0)
             {
                 OpCodes opCode = (OpCodes)ram[ProgramCounter++];
-                if (opCode == OpCodes.JSR)
+
+                if (opCode == OpCodes.CLC)
+                {
+                    SR.Carry = false;
+                }
+                else if (opCode == OpCodes.JSR)
                 {
                     UInt16 addr = (UInt16)(((UInt16)ram[ProgramCounter++] << 8) | (UInt16)(ram[ProgramCounter++]));
                     UInt16 prevAddr = ProgramCounter;
@@ -188,19 +193,28 @@ namespace ASM_Emulator
                     UInt16 addr = (UInt16)(((UInt16)ram[ProgramCounter++] << 8) | (UInt16)(ram[ProgramCounter++]));
                     X.Compare(ram[addr]);
                 }
-
-
+                else if (opCode == OpCodes.PRINT_ADDR)
+                {
+                    UInt16 addr = (UInt16)(((UInt16)ram[ProgramCounter++] << 8) | (UInt16)(ram[ProgramCounter++]));
+                    Console.WriteLine("Current Memory from {0:X4}:", addr);
+                    PrintRAM(addr,1);
+                }
+                else if (opCode == OpCodes.PRINT_MEM)
+                {
+                    Console.WriteLine("Current Memory from {0:X4}:", 0);
+                    PrintRAM(0,1);
+                }
             }
         }
 
         public void PrintRAM()
         {
-            PrintRAM(0);
+            PrintRAM(0, 8);
         }
 
-        public void PrintRAM(ushort offset)
+        public void PrintRAM(ushort offset,ushort numRows)
         {
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < numRows; i++)
             {
                 Console.Write("${0:X4}: ", offset + i * 8);
                 for (int j = 0; j < 8; j++)
@@ -213,7 +227,7 @@ namespace ASM_Emulator
 
         public void PrintInstructions()
         {
-            PrintRAM(ProgramStart);
+            PrintRAM(ProgramStart, 10);
         }
     }
 }
